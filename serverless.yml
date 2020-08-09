@@ -1,0 +1,44 @@
+service: disposable-email-api
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-iam-roles-per-function
+  - serverless-pseudo-parameters
+
+custom:
+  prune:
+    automatic: true
+    number: 3
+  cors:
+    staging: false
+    production: false
+    default: true
+  domainName: "happyeme.com"
+  accountId: !Ref AWS::AccountId
+  ruleSetName: "happyemerule"
+  emailsTableName: "disposable_emails_table"
+  sessionsTableName: "disposable_sessions_table"
+  addressesTableName: "disposable_addresses_table"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ${opt:region}
+
+  tags:
+    Service: ${self:service}
+    Owner: binli
+    Environment: ${env:ENVIRONMENT}
+    Region: ${self:provider.region}
+    Version: ${env:SERVICE_VERSION}
+
+  stackTags:
+    Service: ${self:service}
+    Owner: binli
+    Environment: ${env:ENVIRONMENT}
+    Region: ${self:provider.region}
+    Version: ${env:SERVICE_VERSION}
+
