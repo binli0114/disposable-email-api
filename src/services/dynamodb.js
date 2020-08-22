@@ -19,7 +19,13 @@ const get = async params => {
 	});
 	return docClient.get(params).promise();
 };
-
+const query = async params => {
+	AWS.config.update(awsConfig());
+	const docClient = new AWS.DynamoDB.DocumentClient({
+		apiVersion: "2012-08-10"
+	});
+	return docClient.query(params).promise();
+};
 const put = async params => {
 	AWS.config.update(awsConfig());
 	const docClient = new AWS.DynamoDB.DocumentClient({
@@ -27,8 +33,25 @@ const put = async params => {
 	});
 	return docClient.put(params).promise();
 };
+
+const isRequestorHasAddress = async requestId => {
+	const TableName = "disposable_addresses_table";
+	const params = {
+		TableName,
+		IndexName: "requestId-index",
+		KeyConditionExpression: "requestId = :requestId",
+		ExpressionAttributeValues: { ":requestId": requestId }
+	};
+	const { Items } = await query(params);
+	if (Items.length) {
+		const [Item] = Items;
+		return Item;
+	}
+	return null;
+};
+
 const isAddressExist = async address => {
-	const TableName = process.env.addressesTableName;
+	const TableName = "disposable_addresses_table";
 	const params = {
 		TableName,
 		Key: { address }
@@ -43,14 +66,17 @@ const isAddressExist = async address => {
 	return false;
 };
 
-const createEmailAddress = async address => {
+const createEmailAddress = async (address, activityId, requestId, context) => {
 	const mailboxTTL = parseInt(process.env.mailboxTTL || 3600);
 	const ttl = moment().add(mailboxTTL, "seconds").unix();
-	const TableName = process.env.addressesTableName;
+	const TableName = "disposable_addresses_table";
 	const params = {
 		TableName,
 		Item: {
 			address,
+			activityId,
+			requestId,
+			context,
 			ttl
 		}
 	};
@@ -61,7 +87,7 @@ const createSession = async () => {
 	const sessionId = uuidv4();
 	const sessionTTL = parseInt(process.env.sessionTTL || 600);
 	const ttl = moment().add(sessionTTL, "seconds").unix();
-	const TableName = process.env.sessionsTableName;
+	const TableName = "disposable_sessions_table";
 	const params = {
 		TableName,
 		Item: {
@@ -77,5 +103,6 @@ module.exports = {
 	put,
 	isAddressExist,
 	createEmailAddress,
-	createSession
+	createSession,
+	isRequestorHasAddress
 };

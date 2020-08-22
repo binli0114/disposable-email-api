@@ -62,8 +62,11 @@ functions:
           - dynamodb:PutItem
           - dynamodb:UpdateItem
           - dynamodb:GetItem
+          - dynamodb:Query
         Resource:
           - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.emailsTableName}
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.addressesTableName}
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.sessionsTableName}
     events:
       - http:
           path: email
