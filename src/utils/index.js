@@ -2,7 +2,7 @@ const moment = require("moment");
 
 const getSessionTimeDiffInMins = ttl => {
 	const end = moment(ttl);
-	const duration = moment.duration(end.diff(Date.now()));
+	const duration = moment.duration(end.diff(moment().unix()) * 1000);
 	return Math.round(duration.asMinutes());
 };
 const getRequestIdFromContext = context => {
