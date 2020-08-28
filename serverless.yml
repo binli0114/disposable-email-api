@@ -51,6 +51,26 @@ provider:
     sessionTTL: 600
 
 functions:
+  getStatus:
+    handler: src/handlers/getStatus.getStatus
+    timeout: 30
+    memorySize: 512
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.addressesTableName}*
+    events:
+      - http:
+          path: email/status/{requestId}
+          method: get
+    tags:
+      Name: getStatus
+      Type: Endpoint
+
   createEmail:
     handler: src/handlers/createEmail.main
     timeout: 30

@@ -33,7 +33,22 @@ const put = async params => {
 	});
 	return docClient.put(params).promise();
 };
-
+const scan = async params => {
+	AWS.config.update(awsConfig());
+	const docClient = new AWS.DynamoDB.DocumentClient({
+		apiVersion: "2012-08-10"
+	});
+	return docClient.scan(params).promise();
+};
+const getSessionCount = async () => {
+	const TableName = "disposable_sessions_table";
+	const params = {
+		TableName,
+		Select: "COUNT"
+	};
+	const { Count } = await scan(params);
+	return Count;
+};
 const isRequestorHasAddress = async requestId => {
 	const TableName = "disposable_addresses_table";
 	const params = {
@@ -104,5 +119,6 @@ module.exports = {
 	isAddressExist,
 	createEmailAddress,
 	createSession,
-	isRequestorHasAddress
+	isRequestorHasAddress,
+	getSessionCount
 };
