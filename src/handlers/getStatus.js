@@ -25,7 +25,7 @@ const getStatus = async event => {
 	return {
 		statusCode: 200,
 		body:
-			"There is no valid email address, please click the [Create] button to create a new email address"
+			"There is no valid email address, please click the [Create Email] button to create a new email address"
 	};
 };
 
