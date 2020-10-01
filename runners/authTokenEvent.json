@@ -1,0 +1,17 @@
+{
+  "enhancedAuthContext": {},
+  "methodArn": "arn:aws:execute-api:localhost:random-account-id:random-api-id/dev/POST/newwebhook",
+  "requestContext": {
+    "accountId": "random-account-id",
+    "apiId": "random-api-id",
+    "httpMethod": "POST",
+    "requestId": "random-request-id",
+    "resourceId": "random-resource-id",
+    "resourcePath": "/newwebhook",
+    "path": "/dev/newwebhook",
+    "stage": "dev"
+  },
+  "resource": "/newwebhook",
+  "authorizationToken": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiJhcGk6Ly9mMzY4MzRhMy1mY2JiLTRjM2MtOTZkNS1lOTUwMjAzN2I4MWQiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80ZTY2ODJkMy1hM2U3LTQ1YmUtYjhhNC0xMzNhYzJjNmU3NDcvIiwiaWF0IjoxNjAxNTE0MjU4LCJuYmYiOjE2MDE1MTQyNTgsImV4cCI6MTYwMTYwMDk1OCwiYWlvIjoiRTJSZ1lIQjA0SG1idUpIcGVPbERWNkh5aVMxOUFBPT0iLCJhcHBpZCI6IjQ2MWU4NjgzLTU1NzUtNDU2MS1hYzdmLTg5OWNjOTA3ZDYyYSIsImFwcGlkYWNyIjoiMiIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzRlNjY4MmQzLWEzZTctNDViZS1iOGE0LTEzM2FjMmM2ZTc0Ny8iLCJvaWQiOiI5NjM1Yzk4Yi1kYWY1LTQ3ZTMtYjg3MC01NTRlZWM2Yjk4MjEiLCJyaCI6IjAuQUFBQTA0Sm1UdWVqdmtXNHBCTTZ3c2JuUjRPR0hrWjFWV0ZGckgtSm5Na0gxaXBCQUFBLiIsInN1YiI6Ijk2MzVjOThiLWRhZjUtNDdlMy1iODcwLTU1NGVlYzZiOTgyMSIsInRpZCI6IjRlNjY4MmQzLWEzZTctNDViZS1iOGE0LTEzM2FjMmM2ZTc0NyIsInV0aSI6ImpyYXk2bGpiaUVHN0ZtVHFKQVlXQVEiLCJ2ZXIiOiIxLjAifQ.Ul9PZm2GivyXape7I1kJ_cvHKPGHHzq4FvGBwLb8G1e2mJR5H17E12DWfwwedNN99C2b5bIoADdJfzsN28iSQtuN-uybusQH1UnxM7OIT8jLLytTrx_jksnhYtZMVgQNSmuIiQMPnk73b_ljCMMgevJ-cRAy1IzP60i9ucaYuVi6S2kCPfjHsrPOr1Z4f_TG19fZo1JZHNdwOhpzlGkK_gvDZBeynDwkxsjXWmeInpvB4tEgjrDq_15l9EqE7EQzdji3SSudfk9v5-eoYNPGW7y2_HERO4jfrVDur2F49KMwMwWnbIlFIgD2gi0fwaHvg3N8yIlJpzqU4TdjAN8O5w",
+  "type": "TOKEN"
+}

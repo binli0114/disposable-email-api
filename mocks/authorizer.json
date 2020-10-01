@@ -1,0 +1,60 @@
+{
+  "enhancedAuthContext": {},
+  "methodArn": "arn:aws:execute-api:localhost:random-account-id:random-api-id/dev/POST/webhook/{accountId}/{requestId}",
+  "requestContext": {
+    "accountId": "random-account-id",
+    "apiId": "random-api-id",
+    "httpMethod": "POST",
+    "requestId": "random-request-id",
+    "resourceId": "random-resource-id",
+    "resourcePath": "/webhook/{accountId}/{requestId}",
+    "path": "/dev/webhook/binli/abc123",
+    "stage": "dev"
+  },
+  "resource": "/webhook/{accountId}/{requestId}",
+  "headers": {
+    "User-Agent": "PostmanRuntime/7.26.3",
+    "Accept": "*/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "869a558c-cc0e-4657-adfb-8426e48848d1",
+    "Host": "localhost:4000",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "0"
+  },
+  "httpMethod": "POST",
+  "multiValueHeaders": {
+    "User-Agent": [
+      "PostmanRuntime/7.26.3"
+    ],
+    "Accept": [
+      "*/*"
+    ],
+    "Cache-Control": [
+      "no-cache"
+    ],
+    "Postman-Token": [
+      "869a558c-cc0e-4657-adfb-8426e48848d1"
+    ],
+    "Host": [
+      "localhost:4000"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br"
+    ],
+    "Connection": [
+      "keep-alive"
+    ],
+    "Content-Length": [
+      "0"
+    ]
+  },
+  "multiValueQueryStringParameters": null,
+  "path": "/dev/webhook/binli/abc123",
+  "pathParameters": {
+    "accountId": "binli",
+    "requestId": "abc123"
+  },
+  "queryStringParameters": null,
+  "type": "REQUEST"
+}

@@ -10,6 +10,7 @@ custom:
   prune:
     automatic: true
     number: 3
+  settings: ${file(./statusCodes.yml)}
   cors:
     staging: false
     production: false
@@ -51,6 +52,64 @@ provider:
     sessionTTL: 600
 
 functions:
+  auth:
+    handler: src/handlers/authorizer.handler
+    timeout: 30
+    memorySize: 128
+    tags:
+      Name: auth
+      Type: authorizer
+  authToken:
+    handler: src/handlers/authorizerToken.handler
+    timeout: 30
+    memorySize: 128
+    tags:
+      Name: authToken
+      Type: authorizer
+  webhook:
+    handler: src/handlers/webhook.handler
+    timeout: 30
+    memorySize: 128
+    events:
+      - http:
+          path: newwebhook
+          method: post
+          authorizer:
+            name: authToken
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
+          response:
+            statusCodes: ${self:custom.settings}
+    tags:
+      Name: webhook
+      Type: Endpoint
+  postTestEmail:
+    handler: src/handlers/Dummy.handler
+    timeout: 30
+    memorySize: 128
+    events:
+      - http:
+          path: webhook
+          method: post
+          authorizer:
+            name: auth
+            resultTtlInSeconds: 0
+            identitySource: method.request.querystring.requestId,method.request.querystring.accountId
+            type: request
+          response:
+            statusCodes: ${self:custom.settings}
+            #identityValidationExpression: someRegex
+#          request:
+#            passThrough: NEVER
+#            template:
+#              application/json: '{
+#                                  "requestId": "$input.path(''requestId'')",
+#                                  "accountId": "$input.path(''accountId'')"
+#                                }'
+    tags:
+      Name: postTestEmail
+      Type: Endpoint
   getStatus:
     handler: src/handlers/getStatus.getStatus
     timeout: 30

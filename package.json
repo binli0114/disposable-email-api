@@ -10,7 +10,8 @@
     "test:watch": "npm test -- --watch",
     "lint": "eslint '**/*.js' --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
-    "offline": "serverless offline start --region localhost --stage dev"
+    "offline": "serverless offline start --region localhost --stage dev",
+    "offlineNoAuth": "serverless offline start --region localhost --stage dev --noAuth"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,8 @@
   "dependencies": {
     "aws-sdk": "^2.729.0",
     "dynamodb-driver": "^1.7.14",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.0.0",
     "moment": "^2.27.0",
     "uuid": "^8.3.0",
     "winston": "^3.3.3"
