@@ -1,0 +1,12 @@
+name: GitHub Actions WebRequest
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test webRequest action
+        uses: satak/webrequest-action@master
+        with:
+          url: https://my-json-server.typicode.com/typicode/demo/posts
+          method: GET
+
