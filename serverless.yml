@@ -2,7 +2,6 @@ service: disposable-email-api
 
 plugins:
   - serverless-prune-plugin
-  - serverless-dynamodb-local
   - serverless-offline
   - serverless-iam-roles-per-function
   - serverless-pseudo-parameters
@@ -15,8 +14,11 @@ custom:
     staging: false
     production: false
     default: true
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4001
   domainName: "happyeme.com"
-  accountId: !Ref AWS::AccountId
+  accountId: #{AWS::AccountId}
   ruleSetName: "happyemerule"
   emailsTableName: "disposable_emails_table"
   sessionsTableName: "disposable_sessions_table"
@@ -41,4 +43,63 @@ provider:
     Environment: ${env:ENVIRONMENT}
     Region: ${self:provider.region}
     Version: ${env:SERVICE_VERSION}
+  environment:
+    emailsTableName: "disposable_emails_table"
+    sessionsTableName: "disposable_sessions_table"
+    addressesTableName: "disposable_addresses_table"
+    mailboxTTL: 3600
+    sessionTTL: 600
 
+functions:
+  getStatus:
+    handler: src/handlers/getStatus.getStatus
+    timeout: 30
+    memorySize: 512
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.addressesTableName}*
+    events:
+      - http:
+          path: email/status/{requestId}
+          method: get
+    tags:
+      Name: getStatus
+      Type: Endpoint
+
+  createEmail:
+    handler: src/handlers/createEmail.main
+    timeout: 30
+    memorySize: 512
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.emailsTableName}
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.addressesTableName}*
+          - arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:custom.sessionsTableName}
+    events:
+      - http:
+          path: email
+          method: post
+    tags:
+      Name: createEmail
+      Type: Endpoint
+
+  listEmails:
+    handler: src/handlers/listEmails.listEmails
+    timeout: 30
+    memorySize: 512
+    events:
+      - http:
+          path: email
+          method: get
